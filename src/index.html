@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>SPOTNET</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Application -->
+  <link href="css/app.css" rel="stylesheet">
+  <style>
+  #boxes {
+    width: 400px;
+    display: inline-block;
+  }
+
+  #box {
+    position: relative;
+    width: 150px;
+  }
+
+  .card {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  #box:hover .card {
+    opacity: 0.3;
+  }
+
+  #box:hover .middle {
+    opacity: 1;
+  }
+
+  .text {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1>SPOTNET</h1>
+    </div>
+
+    <div class="col-md-12" id="article-list">
+      <div class="row">
+        <div class="col-lg-12">
+          <p id="account" class="welcome pull-right"></p>
+          <p id="accountBalance" class="welcome pull-left"></p>
+        </div>
+      </div>
+
+      <div id=boxes>
+          <!-- CARDS LOAD HERE -->
+      </div>
+
+      
+
+      <div id="portfolioRow" class="row">
+        <!-- PORTFOLIO ROWS LOAD HERE -->
+      </div>
+    </div>
+
+    <table id="table">
+        <thead>
+        <tr>
+            <th data-field="token">Token</th>
+            <th data-field="balance">Balance</th>
+            <th data-field="committed">Committed</th>
+            <th data-field="locked">Locked</th>
+        </tr>
+        </thead>
+    </table>
+  </div>
+
+  <!-- Modal form to sell an article -->
+  <div class="modal fade" id="lend" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Lend</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <form>
+                <div class="form-group">
+                  <label for="token_">Token</label>
+                  <select class="form-control" id="token_">
+                    <option value="X1">X1</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+                  <input type="number" class="form-control" id="amount" pattern="[0-9]+([\.,][0-9]+)?" step="1" placeholder="Enter the amount to lend">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-success" data-dismiss="modal" onclick="App.approve(token_.value, amount.value); return false;">Lend</button>
+          <button type="button" class="btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer" class="container">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="navbar-inner navbar-content-center text-center">
+        <p class="text-muted" credit><a href="http://spotnet.io">Spotnet</a> - &copy; 2018</p>
+      </div>
+    </nav>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="js/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table-locale-all.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css" rel="stylesheet">
+<script>
+  $(function () {
+      $('#table').bootstrapTable({
+          data: App.data
+      });
+  });
+
+  function setAcctBalance(balance) {
+    $('#account').text(App.account);
+    $('#accountBalance').text(balance + " ETH");
+  }
+
+  var boxes = $('#boxes');
+  App.tokens.forEach(function(elem) {
+    var $box = $('<div id="box" class="row panel panel-default"></div>');
+    var $card = $('<div class="card" style="width:100%"></div>');
+    var $img = $( "<img id='img_"+elem.name+"' src='"+elem.icon+"'>" );
+    var $name = $( "<div id='name_"+elem.name+"'>"+elem.name+"</div>" );
+    var $price = $( "<div id='price_"+elem.name+"'></div>" );
+    var $change = $( "<div id='change_"+elem.name+"'></div>" );
+    $.get( "https://api.coinmarketcap.com/v1/ticker/"+elem.name+"/", function( resp ) {
+      $( "#price_"+elem.name ).text( '$'+resp[0].price_usd );
+      $( "#change_"+elem.name ).text( resp[0].percent_change_24h );
+    });
+    var $button = $( "<div class='middle'><button class='btn btn-info btn-lg pull-right' data-toggle='modal' data-target='#lend'>Lend</button></div>");
+    $card.append($img, $name, $price, $change);
+    $box.append($card, $button);
+    boxes.append($box);
+  });
+</script>
+
+</body>
+
+</html>
