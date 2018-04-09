@@ -16,7 +16,7 @@
     </div>
     <div class="container mt-3">
       <div class="card-deck mb-3 text-center">
-        <div class="metrics-card card mb-4 box-shadow col-xl-3">
+        <div class="metrics-card loan-card card mb-4 box-shadow col-xl-3">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">BNB</h4>
             <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
@@ -42,7 +42,7 @@
                 <td class="metrics-value">50%</td>
               </tr>
               <tr>
-                <td class="metrics-name">Minimal Margin:</td>
+                <td class="metrics-name">Minimum Margin:</td>
                 <td class="metrics-value">15%</td>
               </tr>
               <tr>
@@ -54,6 +54,8 @@
                 <td class="metrics-value">9000</td>
               </tr>
             </table>
+            <input type="text" name="lend" value="">
+            <button>Lend</button>
             <h5 class="my-2">Holdings</h5>
             <table class="metrics my-2">
               <tr>
@@ -79,6 +81,55 @@
                 <td class="metrics-value">75.83 ETH</td>
               </tr>
             </table>
+            <input type="text" name="recall" value="">
+            <button>Recall</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-deck mb-3 text-center">
+        <div class="metrics-card positions-card card bg-dark text-white mb-4 box-shadow col-xl-3">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">EOS</h4>
+            <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
+          </div>
+          <div class="card-body">
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Price:</td>
+                <td class="metrics-value">0.089 ETH</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Daily Vol:</td>
+                <td class="metrics-value">58470</td>
+              </tr>
+            </table>
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Short Interest:</td>
+                <td class="metrics-value">< 2%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Initial Margin:</td>
+                <td class="metrics-value">50%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Minimum Margin:</td>
+                <td class="metrics-value">15%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Daily Lending Rate:</td>
+                <td class="metrics-value">0.03 BNB</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">24 Hour Lend Vol:</td>
+                <td class="metrics-value">9000</td>
+              </tr>
+            </table>
+            <p><input type="text" name="trade" value=""></p>
+            <p>
+              <button>Lend</button>
+              <button>Short Sell</button>
+            </p>
           </div>
         </div>
       </div>
