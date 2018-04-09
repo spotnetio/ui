@@ -3,17 +3,22 @@
 const Inventory = (function() {
   return {
     get() {
-      return new Promise((resolve, reject) => {
-        let inventoryCard = {
-          price: '0.089 ETH',
-          dailyVol: 58470,
-          shortInterest: '< 2%',
-          initMargin: '50%',
-          minMargin: '15%',
-          dailyLendingRate: '0.03 BNB',
-          dailyLendVol: 9000,
-        };
-        resolve([inventoryCard]);
+      return new Promise(async (resolve, reject) => {
+        let result = [];
+        for (let key in App.deployedContracts) {
+          let contract = App.deployedContracts[key];
+          result.push({
+            name: key,
+            price: '0.0899 ETH',
+            dailyVol: 58470,
+            shortInterest: '< 2%',
+            initMargin: '50%',
+            minMargin: '15%',
+            dailyLendingRate: '0.03 BNB',
+            dailyLendVol: 9000,
+          });
+        }
+        resolve(result);
       });
     },
   };
@@ -23,20 +28,29 @@ const Positions = (function() {
   return {
     get() {
       return new Promise((resolve, reject) => {
-        let positionCard = {
-          side: 'LEND',
-          amountLoaned: '8000 BNB',
-          interestEarned: '75.83 ETH',
-          openInventory: '2000 BNB',
-          openDuration: '6 Days',
-        };
-        resolve([positionCard]);
+        let result = [];
+        $.ajax({
+          url: 'http://localhost:3001/inventory',
+          success: function( data ) {
+            for(let token in data) {
+              result.push({
+                name: App.contractsByAddress[token].name,
+                side: 'LEND',
+                amountLoaned: '8000 BNB',
+                interestEarned: '75.83 ETH',
+                openInventory: data[token],
+                openDuration: '6 Days',
+              });
+            }
+            resolve(result);
+          },
+        });
       });
     },
   };
 })();
 
-;(function($, _) {
+const DisplayCards = function($, _) {
   Inventory.get().then((inventoryCards) => {
     _.forEach(inventoryCards, card => $('.inventory').append(tpl.inventoryCard(card)));
   });
@@ -80,4 +94,4 @@ const Positions = (function() {
     console.log('short', shortAmt);
     $trade.val('');
   });
-})(jQuery, _);
+};

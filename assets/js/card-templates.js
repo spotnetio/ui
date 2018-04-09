@@ -4,7 +4,7 @@ let tpl = {};
 tpl.positionCard = _.template(`
   <div class="position-card card mb-4 box-shadow col-xl-3">
     <div class="card-header">
-      <h4 class="my-0 font-weight-normal">BNB</h4>
+      <h4 class="my-0 font-weight-normal"><%= name %></h4>
       <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
     </div>
     <div class="card-body">
@@ -43,7 +43,7 @@ tpl.positionCard = _.template(`
 tpl.inventoryCard = _.template(`
   <div class="inventory-card card bg-dark text-white mb-4 box-shadow col-xl-3">
     <div class="card-header">
-      <h4 class="my-0 font-weight-normal">EOS</h4>
+      <h4 class="my-0 font-weight-normal"><%= name %></h4>
       <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
     </div>
     <div class="card-body">
