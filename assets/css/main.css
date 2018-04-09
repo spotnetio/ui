@@ -1,0 +1,27 @@
+.metrics-card {
+  height: 100%;
+  padding: 0;
+}
+
+.metrics-card .metrics {
+  font-size: 12px;
+  width: 100%;
+}
+
+.metrics-card .metrics {
+  border-top: 1px solid rgba(0,0,0,.125);
+}
+
+.metrics-card .metrics:first-child {
+  border-top: none;
+}
+
+.metrics .metrics-name {
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.metrics .metrics-value {
+  text-align: right;
+}

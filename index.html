@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
   </head>
   <body>
     <div class="navbar navbar-dark bg-dark box-shadow">
@@ -15,96 +16,69 @@
     </div>
     <div class="container mt-3">
       <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 box-shadow">
+        <div class="metrics-card card mb-4 box-shadow col-xl-3">
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">BNB</h4>
             <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
           </div>
           <div class="card-body">
-            <p>Price: 0.089 ETH</p>
-            <p>Daily Volume: 58470</p>
-            <p>Short Interest: < 2%</p>
-            <p>Initial Margin: 50%</p>
-            <p>Minimal Margin: 15%</p>
-            <p>Daily Lending Rate: 0.03 BNB</p>
-            <p>24 Hour Lend Volume: 9000</p>
-            <hr />
-            <p>Holdings: </p>
-            <p>Side: LEND</p>
-            <p>Amount On Loan: 8000 BNB</p>
-            <p>Interest Earned: 75.83 ETH</p>
-            <hr />
-            <p>Open Inventory: 2000 BNB</p>
-            <p>Duration Open: 75.83 ETH</p>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">BNB</h4>
-            <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
-          </div>
-          <div class="card-body">
-            <p>Price: 0.089 ETH</p>
-            <p>Daily Volume: 58470</p>
-            <p>Short Interest: < 2%</p>
-            <p>Initial Margin: 50%</p>
-            <p>Minimal Margin: 15%</p>
-            <p>Daily Lending Rate: 0.03 BNB</p>
-            <p>24 Hour Lend Volume: 9000</p>
-            <hr />
-            <p>Holdings: </p>
-            <p>Side: LEND</p>
-            <p>Amount On Loan: 8000 BNB</p>
-            <p>Interest Earned: 75.83 ETH</p>
-            <hr />
-            <p>Open Inventory: 2000 BNB</p>
-            <p>Duration Open: 75.83 ETH</p>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">BNB</h4>
-            <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
-          </div>
-          <div class="card-body">
-            <p>Price: 0.089 ETH</p>
-            <p>Daily Volume: 58470</p>
-            <p>Short Interest: < 2%</p>
-            <p>Initial Margin: 50%</p>
-            <p>Minimal Margin: 15%</p>
-            <p>Daily Lending Rate: 0.03 BNB</p>
-            <p>24 Hour Lend Volume: 9000</p>
-            <hr />
-            <p>Holdings: </p>
-            <p>Side: LEND</p>
-            <p>Amount On Loan: 8000 BNB</p>
-            <p>Interest Earned: 75.83 ETH</p>
-            <hr />
-            <p>Open Inventory: 2000 BNB</p>
-            <p>Duration Open: 75.83 ETH</p>
-          </div>
-        </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">BNB</h4>
-            <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
-          </div>
-          <div class="card-body">
-            <p>Price: 0.089 ETH</p>
-            <p>Daily Volume: 58470</p>
-            <p>Short Interest: < 2%</p>
-            <p>Initial Margin: 50%</p>
-            <p>Minimal Margin: 15%</p>
-            <p>Daily Lending Rate: 0.03 BNB</p>
-            <p>24 Hour Lend Volume: 9000</p>
-            <hr />
-            <p>Holdings: </p>
-            <p>Side: LEND</p>
-            <p>Amount On Loan: 8000 BNB</p>
-            <p>Interest Earned: 75.83 ETH</p>
-            <hr />
-            <p>Open Inventory: 2000 BNB</p>
-            <p>Duration Open: 75.83 ETH</p>
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Price:</td>
+                <td class="metrics-value">0.089 ETH</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Daily Vol:</td>
+                <td class="metrics-value">58470</td>
+              </tr>
+            </table>
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Short Interest:</td>
+                <td class="metrics-value">< 2%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Initial Margin:</td>
+                <td class="metrics-value">50%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Minimal Margin:</td>
+                <td class="metrics-value">15%</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Daily Lending Rate:</td>
+                <td class="metrics-value">0.03 BNB</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">24 Hour Lend Vol:</td>
+                <td class="metrics-value">9000</td>
+              </tr>
+            </table>
+            <h5 class="my-2">Holdings</h5>
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Side:</td>
+                <td class="metrics-value">LEND</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Amount On Loan:</td>
+                <td class="metrics-value">8000 BNB</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Interest Earned:</td>
+                <td class="metrics-value">75.83 ETH</td>
+              </tr>
+            </table>
+            <table class="metrics my-2">
+              <tr>
+                <td class="metrics-name">Open Inventory:</td>
+                <td class="metrics-value">2000 BNB</td>
+              </tr>
+              <tr>
+                <td class="metrics-name">Duration Open:</td>
+                <td class="metrics-value">75.83 ETH</td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
