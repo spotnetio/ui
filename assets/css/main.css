@@ -1,18 +1,23 @@
-.metrics-card {
+.position-card {
   height: 100%;
   padding: 0;
 }
 
-.metrics-card .metrics {
+.position-card .metrics,
+.inventory-card .metrics {
   font-size: 12px;
   width: 100%;
 }
 
-.metrics-card .metrics {
+.position-card .metrics {
   border-top: 1px solid rgba(0,0,0,.125);
 }
 
-.metrics-card .metrics:first-child {
+.inventory-card .metrics {
+  border-top: 1px solid white;
+}
+
+.position-card .metrics:first-child {
   border-top: none;
 }
 
@@ -26,6 +31,7 @@
   text-align: right;
 }
 
-.positions-card input[name="trade"] {
+.position-card input[name="trade"],
+.inventory-card input[name="trade"] {
   width: 100%;
 }
