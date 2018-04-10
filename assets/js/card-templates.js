@@ -1,7 +1,6 @@
 'use strict';
 
 let tpl = {};
-
 tpl.positionCard = _.template(`
   <div class="position-card card mb-4 box-shadow col-xl-3">
     <div class="card-header">
