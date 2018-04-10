@@ -32,8 +32,10 @@ tpl.positionCard = _.template(`
           <td class="metrics-value"><%= openDuration %></td>
         </tr>
       </table>
-      <input type="text" name="recall" value="">
-      <button>Recall</button>
+      <form class="recall">
+        <p><input type="text" name="recall" value="" class="form-control" /></p>
+        <p><input type="submit" value="Recall" class="btn btn-primary" /></p>
+      </form>
     </div>
   </div>
 `);
@@ -77,11 +79,14 @@ tpl.inventoryCard = _.template(`
           <td class="metrics-value"><%= dailyLendVol %></td>
         </tr>
       </table>
-      <p><input type="text" name="trade" value=""></p>
-      <p>
-        <button>Lend</button>
-        <button>Short Sell</button>
-      </p>
+      <form class="trade">
+        <p><input type="text" name="trade" value="" class="form-control"></p>
+        <p>
+          <button type="button" class="lend btn btn-primary">Lend</button>
+          <button type="button" class="short btn btn-primary">Short Sell</button>
+        </p>
+      </form>
+
     </div>
   </div>
 `);

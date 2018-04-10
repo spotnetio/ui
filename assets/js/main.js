@@ -44,4 +44,40 @@ const Positions = (function() {
     _.forEach(positionCards, card => $('.positions').append(tpl.positionCard(card)));
   });
 
+  $('.positions.card-deck').on('submit', 'form.recall', (event) => {
+    event.preventDefault();
+    let $recall = $(event.target).find('input[name="recall"]');
+    let recallAmt = parseInt($recall.val());
+    if (isNaN(recallAmt)) {
+      console.log('recall is not a number');
+      $recall.val('');
+      return;
+    }
+    console.log('recalling', recallAmt);
+    $recall.val('');
+  });
+  $('.inventory.card-deck').on('click', 'form.trade button.lend', (event) => {
+    event.preventDefault();
+    let $trade = $(event.target).parents('form.trade').find('input[name="trade"]');
+    let lendAmt = parseInt($trade.val());
+    if (isNaN(lendAmt)) {
+      console.log('lend amount is not a number');
+      $trade.val('');
+      return;
+    }
+    console.log('lending', lendAmt);
+    $trade.val('');
+  });
+  $('.inventory.card-deck').on('click', 'form.trade button.short', (event) => {
+    event.preventDefault();
+    let $trade = $(event.target).parents('form.trade').find('input[name="trade"]');
+    let shortAmt = parseInt($trade.val());
+    if (isNaN(shortAmt)) {
+      console.log('short is not a number');
+      $trade.val('');
+      return;
+    }
+    console.log('short', shortAmt);
+    $trade.val('');
+  });
 })(jQuery, _);
