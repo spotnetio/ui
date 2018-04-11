@@ -1,5 +1,7 @@
 'use strict';
 
+const MATCHER_URL = 'http://localhost:3001';
+
 const Inventory = (function() {
   return {
     get() {
@@ -9,6 +11,7 @@ const Inventory = (function() {
           let contract = App.deployedContracts[key];
           result.push({
             name: key,
+            tokenAddress: contract.address,
             price: '0.0899 ETH',
             dailyVol: 58470,
             shortInterest: '< 2%',
@@ -29,8 +32,9 @@ const Positions = (function() {
     get() {
       return new Promise((resolve, reject) => {
         let result = [];
+        console.log(App.account)
         $.ajax({
-          url: 'http://localhost:3001/inventory',
+          url: MATCHER_URL + '/inventory/'+App.account,
           success: function( data ) {
             for(let token in data) {
               result.push({
@@ -51,6 +55,8 @@ const Positions = (function() {
 })();
 
 const DisplayCards = function($, _) {
+  $('.inventory').empty();
+  $('.positions').empty();
   Inventory.get().then((inventoryCards) => {
     _.forEach(inventoryCards, card => $('.inventory').append(tpl.inventoryCard(card)));
   });
@@ -72,14 +78,24 @@ const DisplayCards = function($, _) {
   });
   $('.inventory.card-deck').on('click', 'form.trade button.lend', (event) => {
     event.preventDefault();
-    let $trade = $(event.target).parents('form.trade').find('input[name="trade"]');
+    let formTrade = $(event.target).parents('form.trade');
+    let $trade = formTrade.find('input[name="trade"]');
     let lendAmt = parseInt($trade.val());
+    let $tokenAddress = formTrade.find('input[name="tokenAddress"]');
+    let tokenAddress = $tokenAddress.val();
     if (isNaN(lendAmt)) {
       console.log('lend amount is not a number');
       $trade.val('');
       return;
     }
-    console.log('lending', lendAmt);
+    $.ajax({
+      type: "POST",
+      url: MATCHER_URL + '/inventory/'+App.account,
+      data: { token: tokenAddress, amount: lendAmt },
+    }).always(function(data) {
+        console.log('Post request completed ' + JSON.stringify(data));
+        DisplayCards($, _);
+    });
     $trade.val('');
   });
   $('.inventory.card-deck').on('click', 'form.trade button.short', (event) => {

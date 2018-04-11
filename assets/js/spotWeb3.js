@@ -13,6 +13,7 @@ let App = {
   web3Provider: null,
   deployedContracts: {}, 
   contractsByAddress: {},
+  account: 0x0,
 
   init: function() {
     return App.initWeb3();
@@ -29,6 +30,12 @@ let App = {
     }
     web3 = new Web3(App.web3Provider);
 
+    web3.eth.getCoinbase(function(err, account) {
+      if(err === null) {
+        App.account = account;
+      }
+    });
+
     return App.initContracts();
   },
 
@@ -43,7 +50,6 @@ let App = {
       // Save instance
       let deployedContract = await tokenContract.deployed();
       deployedContract.name = tokenArtifact.contractName;
-      console.log(deployedContract.address);
       App.deployedContracts[tokenArtifact.contractName] = deployedContract;
       App.contractsByAddress[deployedContract.address] = deployedContract;
     }
