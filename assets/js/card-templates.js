@@ -80,6 +80,7 @@ tpl.inventoryCard = _.template(`
         </tr>
       </table>
       <form class="trade">
+        <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
         <p><input type="text" name="trade" value="" class="form-control"></p>
         <p>
           <button type="button" class="lend btn btn-primary">Lend</button>
