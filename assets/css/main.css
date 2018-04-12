@@ -1,15 +1,18 @@
-.position-card {
+.position-card,
+.trade-card {
   height: 100%;
   padding: 0;
 }
 
 .position-card .metrics,
-.inventory-card .metrics {
+.inventory-card .metrics,
+.trade-card .metrics {
   font-size: 12px;
   width: 100%;
 }
 
-.position-card .metrics {
+.position-card .metrics,
+.trade-card .metrics {
   border-top: 1px solid rgba(0,0,0,.125);
 }
 
@@ -17,7 +20,8 @@
   border-top: 1px solid white;
 }
 
-.position-card .metrics:first-child {
+.position-card .metrics:first-child,
+.trade-card .metrics:first-child {
   border-top: none;
 }
 
@@ -32,6 +36,7 @@
 }
 
 .position-card input[name="trade"],
+.trade-card input[name="trade"],
 .inventory-card input[name="trade"] {
   width: 100%;
 }
