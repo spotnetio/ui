@@ -14,7 +14,7 @@ tpl.positionCard = _.template(`
           <td class="metrics-value"><%= side %></td>
         </tr>
         <tr>
-          <td class="metrics-name">Amount On Loan:</td>
+          <td class="metrics-name">Locked:</td>
           <td class="metrics-value"><%= amountLoaned %></td>
         </tr>
         <tr>
@@ -53,7 +53,7 @@ tpl.tradeCard = _.template(`
           <td class="metrics-value"><%= side %></td>
         </tr>
         <tr>
-          <td class="metrics-name">Amount On Loan:</td>
+          <td class="metrics-name">Locked:</td>
           <td class="metrics-value"><%= amountLoaned %></td>
         </tr>
         <tr>
