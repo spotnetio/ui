@@ -1,19 +1,20 @@
 const LOCAL_PATH = "/assets/contracts/local/";
 const ContractsByNetwork = { 
   4224 : [
-    LOCAL_PATH + "Spot.json",
+    // LOCAL_PATH + "Spot.json",
     LOCAL_PATH + "EosToken.json",
     LOCAL_PATH + "VenToken.json",
     LOCAL_PATH + "WethToken.json",
     // LOCAL_PATH + "X1Token.json",
   ],
-}; 
+};
 
 let App = {
   web3Provider: null,
   deployedContracts: {}, 
   contractsByAddress: {},
   account: 0x0,
+  vaultDeployed: null, 
 
   init: function() {
     return App.initWeb3();
@@ -40,6 +41,12 @@ let App = {
   },
 
   initContracts: async function() {
+    // Initialize vault 
+    let vaultArtifact = await $.getJSON(LOCAL_PATH + "Spot.json");
+    let vaultContract = TruffleContract(vaultArtifact);
+    vaultContract.setProvider(App.web3Provider);
+    App.vaultDeployed = await vaultContract.deployed();
+
     let contracts = ContractsByNetwork[4224];
     for (var i = 0; i < contracts.length; i++) {
       tokenArtifact = await $.getJSON(contracts[i]);

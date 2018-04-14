@@ -30,20 +30,45 @@ const Inventory = (function() {
 const Positions = (function() {
   return {
     get() {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         let result = [];
-        console.log(App.account)
+        let numLocks = await App.vaultDeployed.getNumberOfLocksForAddress(App.account);
+        let locks = {};
+        for (let i=0; i<numLocks; i++) {
+          let lock = await App.vaultDeployed.getLock(App.account, i);
+          if(lock[0] == App.account){
+            if(lock[2] in locks) {
+              // add locks
+              locks[lock[2]][3] = parseInt(locks[lock[2]][3]) + parseInt(lock[3]);
+              locks[lock[2]][4] = parseInt(locks[lock[2]][4]) + parseInt(lock[4]);
+            }
+            else {
+              locks[lock[2]] = lock;
+            }
+          }
+        }
+        // console.log('locks '+JSON.stringify(locks));
+        // console.log(MATCHER_URL + '/inventory/'+App.account);
         $.ajax({
           url: MATCHER_URL + '/inventory/'+App.account,
           success: function( data ) {
-            for(let token in data) {
-              if(data[token]['lender'] > 0) {
+            for(let token in App.contractsByAddress) {
+              let openLend = 0; 
+              if(token in data) {
+                openLend = data[token]['lender'];
+              }
+              let lockedLend = 0;
+              if(token in locks) {
+                lockedLend = locks[token][3];
+              }
+              // console.log('openLend '+openLend+' lockedLend '+lockedLend);
+              if(openLend > 0 || lockedLend > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
                   side: 'LEND',
-                  amountLoaned: '8000 BNB',
+                  amountLoaned: lockedLend,
                   interestEarned: '75.83 ETH',
-                  openInventory: data[token]['lender'],
+                  openInventory: openLend,
                   openDuration: '1 Day(s)',
                 });
               }
@@ -59,20 +84,42 @@ const Positions = (function() {
 const Trades = (function() {
   return {
     get() {
-      return new Promise((resolve, reject) => {
+      return new Promise(async (resolve, reject) => {
         let result = [];
-        console.log(App.account)
+        let numLocks = await App.vaultDeployed.getNumberOfLocksForAddress(App.account);
+        let locks = {};
+        for (let i=0; i<numLocks; i++) {
+          let lock = await App.vaultDeployed.getLock(App.account, i);
+          if(lock[1] == App.account) {
+            if(lock[2] in locks){
+              // add locks
+              locks[lock[2]][3] = parseInt(locks[lock[2]][3]) + parseInt(lock[3]);
+              locks[lock[2]][4] = parseInt(locks[lock[2]][4]) + parseInt(lock[4]);
+            }
+            else {
+              locks[lock[2]] = lock;
+            }
+          }
+        }
         $.ajax({
           url: MATCHER_URL + '/inventory/'+App.account,
           success: function( data ) {
-            for(let token in data) {
-              if(data[token]['trader'] > 0) {
+            for(let token in App.contractsByAddress) {
+              let openTrade = 0; 
+              if(token in data) {
+                openTrade = data[token]['trader'];
+              }
+              let lockedTrade = 0;
+              if(token in locks) {
+                lockedTrade = locks[token][3];
+              }
+              if(openTrade > 0 || lockedTrade > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
                   side: 'TRADE',
-                  amountLoaned: '8000 BNB',
+                  amountLoaned: lockedTrade,
                   interestEarned: '75.83 ETH',
-                  openInventory: data[token]['trader'],
+                  openInventory: openTrade,
                   openDuration: '1 Day(s)',
                 });
               }
@@ -106,7 +153,7 @@ const DisplayCards = function($, _) {
     let formTrade = $(event.target).parents('form.trade');
     let $lend = formTrade.find('input[name="trade"]');
     let lendAmt = parseInt($lend.val());
-    console.log('lendAmt ' + lendAmt);
+    // console.log('lendAmt ' + lendAmt);
     let $tokenAddress = formTrade.find('input[name="tokenAddress"]');
     let tokenAddress = $tokenAddress.val();
     if (isNaN(lendAmt)) {
