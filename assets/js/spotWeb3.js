@@ -1,13 +1,4 @@
-const LOCAL_PATH = "/assets/contracts/local/";
-const ContractsByNetwork = { 
-  4224 : [
-    // LOCAL_PATH + "Spot.json",
-    LOCAL_PATH + "EosToken.json",
-    LOCAL_PATH + "VenToken.json",
-    LOCAL_PATH + "WethToken.json",
-    // LOCAL_PATH + "X1Token.json",
-  ],
-};
+const MATCHER_URL = 'http://localhost:3001';
 
 let App = {
   web3Provider: null,
@@ -15,6 +6,8 @@ let App = {
   contractsByAddress: {},
   account: 0x0,
   vaultDeployed: null, 
+  TradersTokens: {}, 
+  LendersTokens: {},
 
   init: function() {
     return App.initWeb3();
@@ -35,6 +28,9 @@ let App = {
       if(err === null) {
         App.account = account;
       }
+      else {
+        alert("Please connect metamask");
+      }
     });
 
     return App.initContracts();
@@ -42,25 +38,43 @@ let App = {
 
   initContracts: async function() {
     // Initialize vault 
-    let vaultArtifact = await $.getJSON(LOCAL_PATH + "Spot.json");
-    let vaultContract = TruffleContract(vaultArtifact);
-    vaultContract.setProvider(App.web3Provider);
-    App.vaultDeployed = await vaultContract.deployed();
+    let vaultArtifact = await $.ajax({
+      url: MATCHER_URL + '/contracts/Spot',});
+      // success: async function( vaultArtifact ) {
+        let vaultContract = TruffleContract(vaultArtifact);
+        vaultContract.setProvider(App.web3Provider);
+        App.vaultDeployed = await vaultContract.deployed();
 
-    let contracts = ContractsByNetwork[4224];
-    for (var i = 0; i < contracts.length; i++) {
-      tokenArtifact = await $.getJSON(contracts[i]);
-      // get the contract artifact file and use it to instantiate a truffle contract abstraction
-      tokenContract = TruffleContract(tokenArtifact);
-      // set the provider for our contracts
-      tokenContract.setProvider(App.web3Provider);
-      // Save instance
-      let deployedContract = await tokenContract.deployed();
-      deployedContract.name = tokenArtifact.contractName;
-      App.deployedContracts[tokenArtifact.contractName] = deployedContract;
-      App.contractsByAddress[deployedContract.address] = deployedContract;
-    }
-    DisplayCards(jQuery, _);
+        let traders = await App.vaultDeployed.getTraders();
+        let tokens = await App.vaultDeployed.getTokens();
+        traders.forEach(async function (t, i) {
+          App.TradersTokens[t+tokens[i]]=i;
+          let lenders = await App.vaultDeployed.getLenders(i);
+          lenders.forEach(function (l, j) {
+            App.LendersTokens[l+tokens[i]]=[i,j];
+          });
+        });
+      // },
+    
+
+    $.ajax({
+      url: MATCHER_URL + '/tokens/',
+      success: async function( data ) {
+        for(let contract in data) {
+          let tokenArtifact = data[contract];
+          // get the contract artifact file and use it to instantiate a truffle contract abstraction
+          let tokenContract = TruffleContract(tokenArtifact);
+          // set the provider for our contracts
+          tokenContract.setProvider(App.web3Provider);
+          // Save instance
+          let deployedContract = await tokenContract.deployed();
+          deployedContract.name = tokenArtifact.contractName;
+          App.deployedContracts[tokenArtifact.contractName] = deployedContract;
+          App.contractsByAddress[deployedContract.address] = deployedContract;
+        };
+        DisplayCards(jQuery, _);
+      },
+    });
   },
 
 

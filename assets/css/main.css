@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+.trade-card .card-body{
+  background-color: #14233a;
+  color: #9e9e9e;
+}
+
+.trade-card .card-header{
+  background-color: #1d2a3d;
+  color: #adabab;
+}
+
 .position-card .metrics,
 .inventory-card .metrics,
 .trade-card .metrics {
