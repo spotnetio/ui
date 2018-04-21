@@ -1,7 +1,5 @@
 'use strict';
 
-const MATCHER_URL = 'http://localhost:3001';
-
 const Inventory = (function() {
   return {
     get() {
@@ -32,36 +30,23 @@ const Positions = (function() {
     get() {
       return new Promise(async (resolve, reject) => {
         let result = [];
-        let numLocks = await App.vaultDeployed.getNumberOfLocksForAddress(App.account);
-        let locks = {};
-        for (let i=0; i<numLocks; i++) {
-          let lock = await App.vaultDeployed.getLock(App.account, i);
-          if(lock[0] == App.account){
-            if(lock[2] in locks) {
-              // add locks
-              locks[lock[2]][3] = parseInt(locks[lock[2]][3]) + parseInt(lock[3]);
-              locks[lock[2]][4] = parseInt(locks[lock[2]][4]) + parseInt(lock[4]);
-            }
-            else {
-              locks[lock[2]] = lock;
-            }
-          }
-        }
-        // console.log('locks '+JSON.stringify(locks));
-        // console.log(MATCHER_URL + '/inventory/'+App.account);
         $.ajax({
           url: MATCHER_URL + '/inventory/'+App.account,
-          success: function( data ) {
+          success: async function( data ) {
             for(let token in App.contractsByAddress) {
               let openLend = 0; 
               if(token in data) {
                 openLend = data[token]['lender'];
+              }              
+              let amounts = [0];
+              if (App.account+token in App.LendersTokens) {
+                let lenderCoordinates = App.LendersTokens[App.account+token];
+                let allAmts = await App.vaultDeployed.getAmounts(
+                  lenderCoordinates[0]
+                )
+                amounts.push(allAmts[lenderCoordinates[1]]);
               }
-              let lockedLend = 0;
-              if(token in locks) {
-                lockedLend = locks[token][3];
-              }
-              // console.log('openLend '+openLend+' lockedLend '+lockedLend);
+              let lockedLend = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openLend > 0 || lockedLend > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
@@ -86,33 +71,21 @@ const Trades = (function() {
     get() {
       return new Promise(async (resolve, reject) => {
         let result = [];
-        let numLocks = await App.vaultDeployed.getNumberOfLocksForAddress(App.account);
-        let locks = {};
-        for (let i=0; i<numLocks; i++) {
-          let lock = await App.vaultDeployed.getLock(App.account, i);
-          if(lock[1] == App.account) {
-            if(lock[2] in locks){
-              // add locks
-              locks[lock[2]][3] = parseInt(locks[lock[2]][3]) + parseInt(lock[3]);
-              locks[lock[2]][4] = parseInt(locks[lock[2]][4]) + parseInt(lock[4]);
-            }
-            else {
-              locks[lock[2]] = lock;
-            }
-          }
-        }
         $.ajax({
           url: MATCHER_URL + '/inventory/'+App.account,
-          success: function( data ) {
+          success: async function( data ) {
             for(let token in App.contractsByAddress) {
               let openTrade = 0; 
               if(token in data) {
                 openTrade = data[token]['trader'];
               }
-              let lockedTrade = 0;
-              if(token in locks) {
-                lockedTrade = locks[token][3];
+              let amounts = [0];
+              if (App.account+token in App.TradersTokens) {
+                amounts = await App.vaultDeployed.getAmounts(
+                  parseInt(App.TradersTokens[App.account+token])
+                );
               }
+              let lockedTrade = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openTrade > 0 || lockedTrade > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
@@ -143,7 +116,7 @@ const DisplayCards = function($, _) {
     _.forEach(positionCards, card => $('.positions').append(tpl.positionCard(card)));
   });
   Trades.get().then((tradeCards) => {
-    _.forEach(tradeCards, card => $('.trades').append(tpl.tradeCard(card)));
+    _.forEach(tradeCards, card => $('.positions').append(tpl.tradeCard(card)));
   });
 };
 
@@ -206,6 +179,15 @@ const DisplayCards = function($, _) {
       $recall.val('');
       return;
     }
+    $.ajax({
+      type: "POST",
+      url: MATCHER_URL + '/recall/'+App.account,
+      data: { 
+        token: tokenAddress, 
+        amount: recallAmt},
+    }).always(function(data) {
+        DisplayCards($, _);
+    });
     console.log('recalling', recallAmt);
     $recall.val('');
   });
