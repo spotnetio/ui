@@ -51,7 +51,12 @@ let App = {
       App.TradersTokens[t+tokens[i]]=i;
       let lenders = await App.vaultDeployed.getLenders(i);
       lenders.forEach(function (l, j) {
-        App.LendersTokens[l+tokens[i]]=[i,j];
+        if (l+tokens[i] in App.LendersTokens) {
+          App.LendersTokens[l+tokens[i]].push([i,j]);
+        }
+        else {
+          App.LendersTokens[l+tokens[i]]=[[i,j]];
+        }
       });
     });
 
