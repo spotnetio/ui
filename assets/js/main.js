@@ -41,10 +41,12 @@ const Positions = (function() {
               let amounts = [0];
               if (App.account+token in App.LendersTokens) {
                 let lenderCoordinates = App.LendersTokens[App.account+token];
-                let allAmts = await App.vaultDeployed.getAmounts(
-                  lenderCoordinates[0]
-                )
-                amounts.push(allAmts[lenderCoordinates[1]]);
+                for (let [i,lc] of lenderCoordinates.entries()) {
+                  let allAmts = await App.vaultDeployed.getAmounts(
+                    lc[0]
+                  )
+                  amounts.push(allAmts[lc[1]]);
+                }
               }
               let lockedLend = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openLend > 0 || lockedLend > 0) {
