@@ -39,23 +39,21 @@ let App = {
   initContracts: async function() {
     // Initialize vault 
     let vaultArtifact = await $.ajax({
-      url: MATCHER_URL + '/contracts/Spot',});
-      // success: async function( vaultArtifact ) {
-        let vaultContract = TruffleContract(vaultArtifact);
-        vaultContract.setProvider(App.web3Provider);
-        App.vaultDeployed = await vaultContract.deployed();
+      url: MATCHER_URL + '/contracts/Spot'
+    });
+    let vaultContract = TruffleContract(vaultArtifact);
+    vaultContract.setProvider(App.web3Provider);
+    App.vaultDeployed = await vaultContract.deployed();
 
-        let traders = await App.vaultDeployed.getTraders();
-        let tokens = await App.vaultDeployed.getTokens();
-        traders.forEach(async function (t, i) {
-          App.TradersTokens[t+tokens[i]]=i;
-          let lenders = await App.vaultDeployed.getLenders(i);
-          lenders.forEach(function (l, j) {
-            App.LendersTokens[l+tokens[i]]=[i,j];
-          });
-        });
-      // },
-    
+    let traders = await App.vaultDeployed.getTraders();
+    let tokens = await App.vaultDeployed.getTokens();
+    traders.forEach(async function (t, i) {
+      App.TradersTokens[t+tokens[i]]=i;
+      let lenders = await App.vaultDeployed.getLenders(i);
+      lenders.forEach(function (l, j) {
+        App.LendersTokens[l+tokens[i]]=[i,j];
+      });
+    });
 
     $.ajax({
       url: MATCHER_URL + '/tokens/',

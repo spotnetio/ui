@@ -50,6 +50,7 @@ const Positions = (function() {
               if(openLend > 0 || lockedLend > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
+                  tokenAddress: token,
                   side: 'LEND',
                   amountLoaned: lockedLend,
                   interestEarned: '75.83 ETH',
@@ -89,6 +90,7 @@ const Trades = (function() {
               if(openTrade > 0 || lockedTrade > 0) {
                 result.push({
                   name: App.contractsByAddress[token].name,
+                  tokenAddress: token,
                   side: 'TRADE',
                   amountLoaned: lockedTrade,
                   interestEarned: '75.83 ETH',
@@ -170,13 +172,17 @@ const DisplayCards = function($, _) {
     });
     $trade.val('');
   });
-  $('.positions.card-deck').on('submit', 'form.recall', (event) => {
+  $('.positions.card-deck').on('click', 'form.recall button.recall', (event) => {
     event.preventDefault();
-    let $recall = $(event.target).find('input[name="recall"]');
-    let recallAmt = parseInt($recall.val());
+    let formRecall = $(event.target).parents('form.recall');
+    let $recallAmt = formRecall.find('input[name="recallAmt"]');
+    let recallAmt = parseInt($recallAmt.val());
+    let $tokenAddress = formRecall.find('input[name="tokenAddress"]');
+    let tokenAddress = $tokenAddress.val();
+    console.log(tokenAddress);
     if (isNaN(recallAmt)) {
       console.log('recall is not a number');
-      $recall.val('');
+      $recallAmt.val('');
       return;
     }
     $.ajax({
@@ -189,7 +195,7 @@ const DisplayCards = function($, _) {
         DisplayCards($, _);
     });
     console.log('recalling', recallAmt);
-    $recall.val('');
+    $recallAmt.val('');
   });
   $('.trades.card-deck').on('submit', 'form.buy2cover', (event) => {
     event.preventDefault();

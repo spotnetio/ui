@@ -33,8 +33,9 @@ tpl.positionCard = _.template(`
         </tr>
       </table>
       <form class="recall">
-        <p><input type="text" name="recall" value="" class="form-control" /></p>
-        <p><input type="submit" value="Recall" class="btn btn-primary" /></p>
+        <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
+        <p><input type="text" name="recallAmt" value="" class="form-control" /></p>
+        <p><button type="button" class="recall btn btn-primary">Recall</button></p>
       </form>
     </div>
   </div>
