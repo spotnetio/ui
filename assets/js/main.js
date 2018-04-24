@@ -199,16 +199,29 @@ const DisplayCards = function($, _) {
     console.log('recalling', recallAmt);
     $recallAmt.val('');
   });
-  $('.trades.card-deck').on('submit', 'form.buy2cover', (event) => {
+  $('.positions.card-deck').on('click', 'form.buy2cover button.buy2cover', (event) => {
+    console.log(0);
     event.preventDefault();
-    let $buy2cover = $(event.target).find('input[name="buy2cover"]');
-    let buy2coverAmt = parseInt($buy2cover.val());
+    let formB2c = $(event.target).parents('form.buy2cover');
+    let $buy2coverAmt = formB2c.find('input[name="buy2coverAmt"]');
+    let buy2coverAmt = parseInt($buy2coverAmt.val());
+    let $tokenAddress = formB2c.find('input[name="tokenAddress"]');
+    let tokenAddress = $tokenAddress.val();
     if (isNaN(buy2coverAmt)) {
       console.log('buy2cover is not a number');
-      $buy2cover.val('');
+      $buy2coverAmt.val('');
       return;
     }
+    $.ajax({
+      type: "POST",
+      url: MATCHER_URL + '/b2c/'+App.account,
+      data: { 
+        token: tokenAddress, 
+        amount: buy2coverAmt},
+    }).always(function(data) {
+        DisplayCards($, _);
+    });
     console.log('buying back', buy2coverAmt);
-    $buy2cover.val('');
+    $buy2coverAmt.val('');
   });
 })(jQuery, _);

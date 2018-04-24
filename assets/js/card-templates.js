@@ -73,8 +73,9 @@ tpl.tradeCard = _.template(`
         </tr>
       </table>
       <form class="buy2cover">
-        <p><input type="text" name="buy2cover" value="" class="form-control" /></p>
-        <p><input type="submit" value="Buy To Cover" class="btn btn-primary" /></p>
+        <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
+        <p><input type="text" name="buy2coverAmt" value="" class="form-control" /></p>
+        <p><button type="button" class="buy2cover btn btn-primary">Buy To Cover</button></p>
       </form>
     </div>
   </div>
