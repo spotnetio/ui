@@ -32,12 +32,14 @@ tpl.positionCard = _.template(`
           <td class="metrics-value"><%= openDuration %></td>
         </tr>
       </table>
+    </div>
+      <div class="form-recall">
       <form class="recall">
         <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
         <p><input type="text" name="recallAmt" value="" class="form-control" /></p>
         <p><button type="button" class="recall btn btn-primary">Recall</button></p>
       </form>
-    </div>
+      </div>
   </div>
 `);
 
@@ -72,12 +74,14 @@ tpl.tradeCard = _.template(`
           <td class="metrics-value"><%= openDuration %></td>
         </tr>
       </table>
+    </div>
+      <div class="form-buy2cover">
       <form class="buy2cover">
         <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
         <p><input type="text" name="buy2coverAmt" value="" class="form-control" /></p>
         <p><button type="button" class="buy2cover btn btn-primary">Buy To Cover</button></p>
       </form>
-    </div>
+      </div>
   </div>
 `);
 
@@ -98,7 +102,7 @@ tpl.inventoryCard = _.template(`
           <td class="metrics-value"><%= dailyVol %></td>
         </tr>
       </table>
-      <table class="metrics my-2">
+      <table class="metrics my-3">
         <tr>
           <td class="metrics-name">Short Interest:</td>
           <td class="metrics-value"><%= shortInterest %></td>
@@ -120,15 +124,16 @@ tpl.inventoryCard = _.template(`
           <td class="metrics-value"><%= dailyLendVol %></td>
         </tr>
       </table>
+    </div>
+      <div class="form-trade">
       <form class="trade">
         <input type="hidden" name="tokenAddress" value="<%= tokenAddress %>">
         <p><input type="text" name="trade" value="" class="form-control"></p>
-        <p>
-          <button type="button" class="lend btn btn-primary">Lend</button>
-          <button type="button" class="short btn btn-primary">Short Sell</button>
+        <p style="display:inline;white-space: nowrap;">
+        <button type="button" class="lend btn btn-primary">Lend</button>
+        <button type="button" class="short btn btn-primary">Short Sell</button>
         </p>
       </form>
-
-    </div>
+      </div>
   </div>
 `);
