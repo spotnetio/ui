@@ -1,3 +1,47 @@
+.inventory-card .form-trade, 
+.position-card .form-recall, 
+.trade-card .form-buy2cover {
+  transition: .5s ease;
+  opacity: 0.0;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.inventory-card:hover .form-trade, 
+.position-card:hover .form-recall, 
+.trade-card:hover .form-buy2cover {
+  opacity: 1;
+}
+
+.inventory-card .font-weight-normal, 
+.position-card .font-weight-normal, 
+.trade-card .font-weight-normal {
+  transition: .5s ease;
+  opacity: 1;
+}
+
+.inventory-card .metrics, 
+.position-card .metrics, 
+.trade-card .metrics {
+  transition: .5s ease;
+  opacity: 1;
+}
+
+.inventory-card:hover .font-weight-normal, 
+.position-card:hover .font-weight-normal, 
+.trade-card:hover .font-weight-normal {
+  opacity: 0.7;
+}
+
+.inventory-card:hover .metrics, 
+.position-card:hover .metrics, 
+.trade-card:hover .metrics {
+  opacity: 0.3;
+}
+
 .position-card,
 .trade-card {
   height: 100%;
