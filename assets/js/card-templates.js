@@ -4,12 +4,13 @@ let tpl = {};
 tpl.positionCard = _.template(`
   <div class="position-card card mb-4 box-shadow col-xl-3">
     <div style="background-image: url('https://s3.amazonaws.com/spotnet/dark.top.png');">
-      <div class="card-header text-white">
+      <div class="card-header text-white" style="padding-bottom:0;border-bottom:0">
         <img src="https://s3.amazonaws.com/spotnet/eos.png" width=50 height=50>
         <h4 class="my-0 font-weight-normal" style="padding-top: 10px;"><%= name %></h4>
         <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
       </div>
-      <div class="card-body text-white">
+      <div class="card-body text-white" style="padding-top:0">
+        <hr style="border-color:#ffffff;">
         <table class="metrics my-2">
           <tr>
             <td class="metrics-name">Side:</td>
@@ -24,7 +25,7 @@ tpl.positionCard = _.template(`
             <td class="metrics-value"><%= interestEarned %></td>
           </tr>
         </table>
-        <hr style="border-color:#ffffff;">
+        <hr class="metrics" style="border-color:#ffffff;">
         <table class="metrics my-2">
           <tr>
             <td class="metrics-name">Open Inventory:</td>
@@ -52,7 +53,7 @@ tpl.positionCard = _.template(`
           <td class="metrics-value"><%= interestEarned %></td>
         </tr>
       </table>
-      <hr style="border-color:#052C4C;">
+      <hr class="metrics" style="border-color:#052C4C;">
       <table class="metrics my-2">
         <tr>
           <td class="metrics-name">Open Inventory:</td>
@@ -77,12 +78,13 @@ tpl.positionCard = _.template(`
 tpl.tradeCard = _.template(`
   <div class="trade-card card mb-4 box-shadow col-xl-3">
     <div style="background-image: url('https://s3.amazonaws.com/spotnet/dark.top.png');">
-      <div class="card-header text-white">
+      <div class="card-header text-white" style="padding-bottom:0;border-bottom:0">
         <img src="https://s3.amazonaws.com/spotnet/trx.png" width=50 height=50>
         <h4 class="my-0 font-weight-normal" style="padding-top: 10px;"><%= name %></h4>
         <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
       </div>
-      <div class="card-body text-white">
+      <div class="card-body text-white" style="padding-top:0">
+        <hr style="border-color:#ffffff;">
         <table class="metrics my-2">
           <tr>
             <td class="metrics-name">Side:</td>
@@ -97,7 +99,7 @@ tpl.tradeCard = _.template(`
             <td class="metrics-value"><%= interestEarned %></td>
           </tr>
         </table>
-        <hr style="border-color:#ffffff;">
+        <hr class="metrics" style="border-color:#ffffff;">
         <table class="metrics my-2">
           <tr>
             <td class="metrics-name">Open Inventory:</td>
@@ -125,7 +127,7 @@ tpl.tradeCard = _.template(`
           <td class="metrics-value"><%= interestEarned %></td>
         </tr>
       </table>
-      <hr style="border-color:#ffffff;">
+      <hr class="metrics" style="border-color:#ffffff;">
       <table class="metrics my-2">
         <tr>
           <td class="metrics-name">Open Inventory:</td>
@@ -149,12 +151,13 @@ tpl.tradeCard = _.template(`
 
 tpl.inventoryCard = _.template(`
   <div class="inventory-card card bg-dark text-white mb-4 box-shadow col-xl-3" style="background-image: url('https://s3.amazonaws.com/spotnet/dark.top.png');">
-    <div class="card-header">
+    <div class="card-header" style="padding-bottom:0;border-bottom:0">
       <img src="https://s3.amazonaws.com/spotnet/0x-icon.png" width=50 height=50>
       <h4 class="my-0 font-weight-normal" style="padding-top: 10px;"><%= name %></h4>
       <h6 class="mt-1 my-0 font-weight-normal">9088890</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="padding-top:0">
+      <hr style="border-color:#ffffff;">
       <table class="metrics my-2">
         <tr>
           <td class="metrics-name">Price:</td>
@@ -165,7 +168,7 @@ tpl.inventoryCard = _.template(`
           <td class="metrics-value"><%= dailyVol %></td>
         </tr>
       </table>
-      <hr style="border-color:#ffffff;">
+      <hr class="metrics" style="border-color:#ffffff;">
       <table class="metrics my-3">
         <tr>
           <td class="metrics-name">Short Interest:</td>
