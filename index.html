@@ -7,17 +7,39 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="icon" type="image/png" href="https://s3.amazonaws.com/spotnet/favicon.ico">
     <link rel="shortcut icon" href="https://s3.amazonaws.com/spotnet/favicon.ico" type="image/x-icon">
+    <style> 
+      #search {
+          width: 230px;
+          box-sizing: border-box;
+          border: 2px solid #ccc;
+          border-radius: 4px;
+          font-size: 16px;
+          background-color: white;
+          background-image: url('https://s3.amazonaws.com/spotnet/searchicon.png');
+          background-position: 10px 10px; 
+          background-repeat: no-repeat;
+          padding: 12px 20px 12px 40px;
+          -webkit-transition: width 0.4s ease-in-out;
+          transition: width 0.4s ease-in-out;
+      }
+
+      #search:hover {
+          width: 100%;
+      }
+    </style>
   </head>
   <body>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-      <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand d-flex align-items-center">
-          <img src='https://s3.amazonaws.com/spotnet/spotnet.png' width=50 hegth=50><strong>&nbsp;SPOTNET EXPLORER</strong>
-        </a>
-      </div>
+    <p>&nbsp;</p>
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center" style="color:#3c3c3c;vertical-align: top">
+        <img src='https://s3.amazonaws.com/spotnet/spotnet.png' width=250 heigth=250 style="">
+      </a>
+      <hr style="border-color:#052C4C; height:.5px">
+      <input type="text" id="search" placeholder="Search for a token...">
     </div>
     <div class="container mt-3">
       <div class="positions card-deck mb-3 text-center"></div>
+      <hr style="border-color:rgba(0,0,0,.250); height:1px">
       <div class="trades card-deck mb-3 text-center"></div>
       <div class="inventory card-deck mb-3 text-center"></div>
     </div>

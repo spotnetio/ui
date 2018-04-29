@@ -1,4 +1,5 @@
 const MATCHER_URL = 'http://34.237.232.200:3001';
+// const MATCHER_URL = 'http://localhost:3001';
 
 let App = {
   web3Provider: null,
