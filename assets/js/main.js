@@ -8,7 +8,7 @@ const Inventory = (function() {
         for (let key in App.deployedContracts) {
           let contract = App.deployedContracts[key];
           result.push({
-            name: key,
+            name: key.toUpperCase().substring(0,3),
             tokenAddress: contract.address,
             price: '0.0899 ETH',
             dailyVol: 58470,

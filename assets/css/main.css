@@ -16,11 +16,11 @@
   opacity: 1;
 }
 
-.inventory-card .font-weight-normal, 
-.position-card .font-weight-normal, 
-.trade-card .font-weight-normal {
+.inventory-card .card-header, 
+.position-card .card-header, 
+.trade-card .card-header {
   transition: .5s ease;
-  opacity: 1;
+  opacity: .7;
 }
 
 .inventory-card .metrics, 
@@ -30,16 +30,16 @@
   opacity: 1;
 }
 
-.inventory-card:hover .font-weight-normal, 
-.position-card:hover .font-weight-normal, 
-.trade-card:hover .font-weight-normal {
-  opacity: 0.7;
+.inventory-card:hover .card-header, 
+.position-card:hover .card-header, 
+.trade-card:hover .card-header {
+  opacity: 1;
 }
 
 .inventory-card:hover .metrics, 
 .position-card:hover .metrics, 
 .trade-card:hover .metrics {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 
 .position-card,
@@ -48,30 +48,11 @@
   padding: 0;
 }
 
-.trade-card .card-body{
-  background-color: #162d44;
-  color: #9e9e9e;
-}
-
-.trade-card .card-header{
-  background-color: #20364c;
-  color: #adabab;
-}
-
 .position-card .metrics,
 .inventory-card .metrics,
 .trade-card .metrics {
   font-size: 12px;
   width: 100%;
-}
-
-.position-card .metrics,
-.trade-card .metrics {
-  border-top: 1px solid rgba(0,0,0,.125);
-}
-
-.inventory-card .metrics {
-  border-top: 1px solid white;
 }
 
 .position-card .metrics:first-child,
