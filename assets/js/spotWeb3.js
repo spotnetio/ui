@@ -28,6 +28,9 @@ let App = {
     web3.eth.getCoinbase(function(err, account) {
       if(err === null) {
         App.account = account;
+        $('div.account_id').text(App.account);
+        let acctHref = $('a.account_id').attr("href");
+        $('a.account_id').attr("href", acctHref + App.account);
       }
       else {
         alert("Please connect metamask");
