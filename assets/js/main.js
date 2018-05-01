@@ -2,20 +2,21 @@
 
 const Inventory = (function() {
   return {
-    get() {
+    get(tokensToExclude) {
       return new Promise(async (resolve, reject) => {
         let result = [];
         for (let key in App.deployedContracts) {
+          if (tokensToExclude.indexOf(key) >= 0) continue;
           let contract = App.deployedContracts[key];
           result.push({
-            name: key.toUpperCase().substring(0,3),
+            name: key,
             tokenAddress: contract.address,
             price: '0.0899 ETH',
             dailyVol: 58470,
             shortInterest: '< 2%',
             initMargin: '50%',
             minMargin: '15%',
-            dailyLendingRate: '0.03 BNB',
+            dailyLendingRate: '0.03',
             dailyLendVol: 9000,
           });
         }
@@ -51,6 +52,13 @@ const Positions = (function() {
               let lockedLend = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openLend > 0 || lockedLend > 0) {
                 result.push({
+                  price: '0.0899 ETH',
+                  dailyVol: 58470,
+                  shortInterest: '< 2%',
+                  initMargin: '50%',
+                  minMargin: '15%',
+                  dailyLendingRate: '0.03',
+                  dailyLendVol: 9000,
                   name: App.contractsByAddress[token].name,
                   tokenAddress: token,
                   side: 'LEND',
@@ -91,6 +99,13 @@ const Trades = (function() {
               let lockedTrade = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openTrade > 0 || lockedTrade > 0) {
                 result.push({
+                  price: '0.0899 ETH',
+                  dailyVol: 58470,
+                  shortInterest: '< 2%',
+                  initMargin: '50%',
+                  minMargin: '15%',
+                  dailyLendingRate: '0.03',
+                  dailyLendVol: 9000,
                   name: App.contractsByAddress[token].name,
                   tokenAddress: token,
                   side: 'TRADE',
@@ -113,15 +128,28 @@ const DisplayCards = function($, _) {
   $('.inventory').empty();
   $('.positions').empty();
   $('.trades').empty();
-  Inventory.get().then((inventoryCards) => {
-    _.forEach(inventoryCards, card => $('.inventory').append(tpl.inventoryCard(card)));
-  });
+  let tokensToExclude = [];
   Positions.get().then((positionCards) => {
-    _.forEach(positionCards, card => $('.positions').append(tpl.positionCard(card)));
+    _.forEach(positionCards, card => { 
+      $('.positions').append(tpl.positionCard(card)); 
+      tokensToExclude.push(card.name);
+    });
+    populateTrades();
   });
-  Trades.get().then((tradeCards) => {
-    _.forEach(tradeCards, card => $('.positions').append(tpl.tradeCard(card)));
-  });
+  function populateTrades() {
+    Trades.get().then((tradeCards) => {
+      _.forEach(tradeCards, card => { 
+        $('.positions').append(tpl.tradeCard(card)); 
+        tokensToExclude.push(card.name);
+      });
+      populateInventory();
+    });
+  }
+  function populateInventory() {
+    Inventory.get(tokensToExclude).then((inventoryCards) => {
+      _.forEach(inventoryCards, card => $('.inventory').append(tpl.inventoryCard(card)));
+    });
+  }
 };
 
 (function($, _) {
