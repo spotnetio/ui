@@ -153,7 +153,9 @@ const DisplayCards = function($, _) {
 };
 
 (function($, _) {
-  $('.inventory.card-deck').on('click', 'form.trade button.lend', (event) => {
+  $('.inventory.card-deck').on('click', 'form.trade button.lend', lend);
+  $('.positions.card-deck').on('click', 'form.trade button.lend', lend);
+  function lend(event) {
     event.preventDefault();
     let formTrade = $(event.target).parents('form.trade');
     let $lend = formTrade.find('input[name="trade"]');
@@ -177,8 +179,10 @@ const DisplayCards = function($, _) {
         DisplayCards($, _);
     });
     $lend.val('');
-  });
-  $('.inventory.card-deck').on('click', 'form.trade button.short', (event) => {
+  }
+  $('.inventory.card-deck').on('click', 'form.trade button.short', short);
+  $('.positions.card-deck').on('click', 'form.trade button.short', short);
+  function short(event) {
     event.preventDefault();
     let formTrade = $(event.target).parents('form.trade');
     let $trade = formTrade.find('input[name="trade"]');
@@ -201,7 +205,7 @@ const DisplayCards = function($, _) {
         DisplayCards($, _);
     });
     $trade.val('');
-  });
+  }
   $('.positions.card-deck').on('click', 'form.recall button.recall', (event) => {
     event.preventDefault();
     let formRecall = $(event.target).parents('form.recall');
