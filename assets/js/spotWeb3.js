@@ -9,6 +9,45 @@ let App = {
   vaultDeployed: null, 
   TradersTokens: {}, 
   LendersTokens: {},
+  AmountByToken: {},
+  mock: {
+    'EOS': {
+      price: '$17.33 USD',
+      dailyVol: '81,765,392',
+      shortInterest: '< 8%',
+      initMargin: '65%',
+      minMargin: '15%',
+      dailyLendingRate: '0.5%',
+      dailyLendVol: '15M',    
+    },
+    'OMG': {
+      price: '$16.78 USD',
+      dailyVol: '2,640,348',
+      shortInterest: '< 6%',
+      initMargin: '50%',
+      minMargin: '18%',
+      dailyLendingRate: '1.1%',
+      dailyLendVol: '0.9M',    
+    },
+    'BNB': {
+      price: '$13.80 USD',
+      dailyVol: '6,263,875',
+      shortInterest: '< 11%',
+      initMargin: '55%',
+      minMargin: '5%',
+      dailyLendingRate: '0.3%',
+      dailyLendVol: '1.3M',    
+    },
+    'TRX': {
+      price: '$0.08877 USD',
+      dailyVol: '4,464,839,243',
+      shortInterest: '< 7%',
+      initMargin: '90%',
+      minMargin: '15%',
+      dailyLendingRate: '2.0%',
+      dailyLendVol: '3.9M',    
+    },
+  },
 
   init: function() {
     return App.initWeb3();
@@ -62,6 +101,10 @@ let App = {
           App.LendersTokens[l+tokens[i]]=[[i,j]];
         }
       });
+    });
+
+    App.AmountByToken = await $.ajax({
+      url: MATCHER_URL + '/inventory_by_token/lender'
     });
 
     $.ajax({

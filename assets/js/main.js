@@ -11,13 +11,14 @@ const Inventory = (function() {
           result.push({
             name: key,
             tokenAddress: contract.address,
-            price: '0.0899 ETH',
-            dailyVol: 58470,
-            shortInterest: '< 2%',
-            initMargin: '50%',
-            minMargin: '15%',
-            dailyLendingRate: '0.03',
-            dailyLendVol: 9000,
+            available: contract.address in App.AmountByToken ? App.AmountByToken[contract.address] : 0,
+            price: App.mock[key]['price'],
+            dailyVol: App.mock[key]['dailyVol'],
+            shortInterest: App.mock[key]['shortInterest'],
+            initMargin: App.mock[key]['initMargin'],
+            minMargin: App.mock[key]['minMargin'],
+            dailyLendingRate: App.mock[key]['dailyLendingRate'],
+            dailyLendVol: App.mock[key]['dailyLendVol'],
           });
         }
         resolve(result);
@@ -52,20 +53,21 @@ const Positions = (function() {
               let lockedLend = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openLend > 0 || lockedLend > 0) {
                 result.push({
-                  price: '0.0899 ETH',
-                  dailyVol: 58470,
-                  shortInterest: '< 2%',
-                  initMargin: '50%',
-                  minMargin: '15%',
-                  dailyLendingRate: '0.03',
-                  dailyLendVol: 9000,
+                  price: App.mock[App.contractsByAddress[token].name]['price'],
+                  dailyVol: App.mock[App.contractsByAddress[token].name]['dailyVol'],
+                  shortInterest: App.mock[App.contractsByAddress[token].name]['shortInterest'],
+                  initMargin: App.mock[App.contractsByAddress[token].name]['initMargin'],
+                  minMargin: App.mock[App.contractsByAddress[token].name]['minMargin'],
+                  dailyLendingRate: App.mock[App.contractsByAddress[token].name]['dailyLendingRate'],
+                  dailyLendVol: App.mock[App.contractsByAddress[token].name]['dailyLendVol'],
                   name: App.contractsByAddress[token].name,
                   tokenAddress: token,
+                  available: token in App.AmountByToken ? App.AmountByToken[token] : 0,
                   side: 'LEND',
                   amountLoaned: lockedLend,
-                  interestEarned: '75.83 ETH',
+                  interestEarned: '$0 USD',
                   openInventory: openLend,
-                  openDuration: '1 Day(s)',
+                  openDuration: '1 DAYS',
                 });
               }
             }
@@ -99,20 +101,21 @@ const Trades = (function() {
               let lockedTrade = amounts.reduce((a, b) => parseInt(a) + parseInt(b), 0);
               if(openTrade > 0 || lockedTrade > 0) {
                 result.push({
-                  price: '0.0899 ETH',
-                  dailyVol: 58470,
-                  shortInterest: '< 2%',
-                  initMargin: '50%',
-                  minMargin: '15%',
-                  dailyLendingRate: '0.03',
-                  dailyLendVol: 9000,
+                  price: App.mock[App.contractsByAddress[token].name]['price'],
+                  dailyVol: App.mock[App.contractsByAddress[token].name]['dailyVol'],
+                  shortInterest: App.mock[App.contractsByAddress[token].name]['shortInterest'],
+                  initMargin: App.mock[App.contractsByAddress[token].name]['initMargin'],
+                  minMargin: App.mock[App.contractsByAddress[token].name]['minMargin'],
+                  dailyLendingRate: App.mock[App.contractsByAddress[token].name]['dailyLendingRate'],
+                  dailyLendVol: App.mock[App.contractsByAddress[token].name]['dailyLendVol'],
                   name: App.contractsByAddress[token].name,
                   tokenAddress: token,
-                  side: 'TRADE',
+                  available: token in App.AmountByToken ? App.AmountByToken[token] : 0,
+                  side: 'SHORTSELL',
                   amountLoaned: lockedTrade,
                   interestEarned: '75.83 ETH',
                   openInventory: openTrade,
-                  openDuration: '1 Day(s)',
+                  openDuration: '1 DAYS',
                 });
               }
             }
@@ -232,7 +235,6 @@ const DisplayCards = function($, _) {
     $recallAmt.val('');
   });
   $('.positions.card-deck').on('click', 'form.buy2cover button.buy2cover', (event) => {
-    console.log(0);
     event.preventDefault();
     let formB2c = $(event.target).parents('form.buy2cover');
     let $buy2coverAmt = formB2c.find('input[name="buy2coverAmt"]');

@@ -1,23 +1,33 @@
-.inventory-card .form-trade, 
+.inventory-card .form-trade {
+  transition: .5s ease;
+  opacity: 0.0;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
 .trade-card .form-trade, 
 .position-card .form-trade {
   transition: .5s ease;
   opacity: 0.0;
   position: absolute;
-  top: 278px;
+  top: 86%;
   left: 50%;
-  transform: translate(-50%, -45px);
-  -ms-transform: translate(-50%, -45px);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
+
 .position-card .form-recall, 
 .trade-card .form-buy2cover {
   transition: .5s ease;
   opacity: 0.0;
   position: absolute;
-  top: 460px;
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -55px);
-  -ms-transform: translate(-50%, -50px);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 .inventory-card:hover .form-trade,
@@ -73,13 +83,25 @@
 }
 
 .metrics .metrics-name {
-  font-weight: bold;
   text-transform: uppercase;
   text-align: left;
 }
 
 .metrics .metrics-value {
   text-align: right;
+  font-weight: bold;
+}
+
+.metrics .underline {
+  text-decoration: underline;
+}
+
+.red {
+  color: #F36E65;
+}
+
+.blue {
+  color: #009CC2;
 }
 
 .position-card input[name="trade"],
