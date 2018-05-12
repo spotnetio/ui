@@ -59,24 +59,32 @@ let App = {
       //reuse the provider of the Web3 object injected by Metamask
       App.web3Provider = web3.currentProvider;
     } else {
-      alert("Please connect metamask");
+      $('div.instructions').show();
       return;
     }
     web3 = new Web3(App.web3Provider);
 
+    web3.version.getNetwork((err, netId) => {
+      if (err) {
+        $('div.instructions').show();
+      }
+      if (netId != "3") {
+        $('div.instructions').show();
+      }
+    });
+
     web3.eth.getCoinbase(function(err, account) {
-      if(err === null) {
+      if(err === null && account) {
         App.account = account;
         $('div.account_id').text(App.account);
         let acctHref = $('a.account_id').attr("href");
         $('a.account_id').attr("href", acctHref + App.account);
+        return App.initContracts();
       }
       else {
-        alert("Please connect metamask");
+        $('div.instructions').show();
       }
     });
-
-    return App.initContracts();
   },
 
   initContracts: async function() {
