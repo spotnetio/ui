@@ -1,5 +1,5 @@
-const MATCHER_URL = 'http://34.237.232.200:3001';
-// const MATCHER_URL = 'http://localhost:3001';
+// const MATCHER_URL = 'http://34.237.232.200:3001';
+const MATCHER_URL = 'http://localhost:3001';
 
 let App = {
   web3Provider: null,
@@ -64,15 +64,6 @@ let App = {
     }
     web3 = new Web3(App.web3Provider);
 
-    web3.version.getNetwork((err, netId) => {
-      if (err) {
-        $('div.instructions').show();
-      }
-      if (netId != "3") {
-        $('div.instructions').show();
-      }
-    });
-
     web3.eth.getCoinbase(function(err, account) {
       if(err === null && account) {
         App.account = account;
@@ -88,20 +79,26 @@ let App = {
   },
 
   initContracts: async function() {
+    console.log(0);
     // Initialize vault 
     let vaultArtifact = await $.ajax({
       url: MATCHER_URL + '/contracts/Spot'
     });
+    console.log(vaultArtifact);
     let vaultContract = TruffleContract(vaultArtifact);
     vaultContract.setProvider(App.web3Provider);
     App.vaultDeployed = await vaultContract.deployed();
 
+    console.log(2);
     let traders = await App.vaultDeployed.getTraders();
     let tokens = await App.vaultDeployed.getTokens();
+    console.log(3);
     traders.forEach(async function (t, i) {
+    console.log(4);
       App.TradersTokens[t+tokens[i]]=i;
       let lenders = await App.vaultDeployed.getLenders(i);
       lenders.forEach(function (l, j) {
+    console.log(5);
         if (l+tokens[i] in App.LendersTokens) {
           App.LendersTokens[l+tokens[i]].push([i,j]);
         }
@@ -110,10 +107,12 @@ let App = {
         }
       });
     });
+    console.log(3);
 
     App.AmountByToken = await $.ajax({
       url: MATCHER_URL + '/inventory_by_token/lender'
     });
+    console.log(4);
 
     $.ajax({
       url: MATCHER_URL + '/tokens/',
@@ -133,6 +132,7 @@ let App = {
         DisplayCards(jQuery, _);
       },
     });
+    console.log(5);
   },
 
 
